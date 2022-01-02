@@ -1,5 +1,5 @@
 #Enable network protection
-Add-MpPreference -EnableNetworkProtection Enabled
+Set-MpPreference -EnableNetworkProtection Enabled
 
 
 # Block abuse of exploited vulnerable signed drivers
