@@ -1,6 +1,7 @@
-#Enable network protection
-Set-MpPreference -EnableNetworkProtection Enabled
+#Enable ASR 
 
+#Enable network protection
+Add-MpPreference -EnableNetworkProtection Enabled
 
 # Block abuse of exploited vulnerable signed drivers
 Add-MpPreference -AttackSurfaceReductionRules_Ids 56a863a9-875e-4185-98a7-b882c64b5ce -AttackSurfaceReductionRules_Actions Enabled
@@ -52,79 +53,85 @@ Add-MpPreference -AttackSurfaceReductionRules_Ids 92e97fa1-2edf-4476-bdd6-9dd0b4
 #You must enable cloud-delivered protection to use this rule.
 Add-MpPreference -AttackSurfaceReductionRules_Ids c1db55ab-c21a-4637-bb3f-a12568109d35 -AttackSurfaceReductionRules_Actions Enabled
 
-#Disable 'Allow Basic authentication' for WinRM Service
-$regpath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Service\AllowBasic";
-new-item -Path $regpath -Force;
-New-ItemProperty -Path $regpath -Name "AllowBasic" -Value "0";
 
-#Disable Solicited Remote Assistance
-$regpath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\fAllowToGetHelp";
-new-item -Path $regpath -Force;
-New-ItemProperty -Path $regpath -Name "fAllowToGetHelp" -Value "0";
 
-#Disable Anonymous enumeration of shares
-$regpath = "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\RestrictAnonymous";
-new-item -Path $regpath -Force;
-New-ItemProperty -Path $regpath -Name "RestrictAnonymous" -Value "1";
+# Reg tweaks
 
-#Disable 'Continue running background apps when Google Chrome is closed'
-$regpath = "HKLM:\SOFTWARE\Policies\Google\Chrome\BackgroundModeEnabled";
-new-item -Path $regpath -Force;
-New-ItemProperty -Path $regpath -Name "BackgroundModeEnabled" -Value "0";
 
-#Enable 'Apply UAC restrictions to local accounts on network logons'
-$regpath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LocalAccountTokenFilterPolicy";
-new-item -Path $regpath -Force;
-New-ItemProperty -Path $regpath -Name "LocalAccountTokenFilterPolicy" -Value "0";
 
-#Disable 'Installation and configuration of Network Bridge on your DNS domain network'
-$regpath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections\NC_AllowNetBridge_NLA";
-new-item -Path $regpath -Force;
-New-ItemProperty -Path $regpath -Name "NC_AllowNetBridge_NLA" -Value "0";
-
-#Prohibit use of Internet Connection Sharing on your DNS domain network
-$regpath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections\NC_ShowSharedAccessUI";
-new-item -Path $regpath -Force;
-New-ItemProperty -Path $regpath -Name "NC_ShowSharedAccessUI" -Value "0";
-
-#Disable 'Autoplay for non-volume devices'
-$regpath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer\NoAutoplayfornonVolume";
-new-item -Path $regpath -Force;
-New-ItemProperty -Path $regpath -Name "NoAutoplayfornonVolume" -Value "1";
-
-#Disable running or installing downloaded software with invalid signature
-$regpath = "HKLM:\SOFTWARE\Policies\Microsoft\Internet Explorer\Download\RunInvalidSignatures";
-new-item -Path $regpath -Force;
-New-ItemProperty -Path $regpath -Name "RunInvalidSignatures" -Value "0";
-
-#Block outdated ActiveX controls for Internet Explorer
-$regpath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Ext\VersionCheckEnabled";
-new-item -Path $regpath -Force;
-New-ItemProperty -Path $regpath -Name "VersionCheckEnabled" -Value "1";
-
-#Disable Flash on Adobe Reader DC
-$regpath = "HKLM\SOFTWARE\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown\bEnableFlash";
-new-item -Path $regpath -Force;
-New-ItemProperty -Path $regpath -Name "bEnableFlash" -Value "0";
-
-#Disable JavaScript on Adobe Reader DC
-$regpath = "HKLM:\SOFTWARE\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown\bDisableJavaScript";
-new-item -Path $regpath -Force;
-New-ItemProperty -Path $regpath -Name "bDisableJavaScript" -Value "1";
-
-#Enable 'Block third party cookies'
-$regpath = "HKLM:\SOFTWARE\Policies\Google\Chrome\BlockThirdPartyCookies";
-new-item -Path $regpath -Force;
-New-ItemProperty -Path $regpath -Name "BlockThirdPartyCookies" -Value "1";
-
-#Disable JavaScript on Adobe DC
-$regpath = "HKLM:\SOFTWARE\Policies\Adobe\Adobe Acrobat\DC\FeatureLockDown\bDisableJavaScript";
-new-item -Path $regpath -Force;
-New-ItemProperty -Path $regpath -Name "bDisableJavaScript" -Value "1";
-
-# remove chrome incognito mode 
+# remove chrome incognito mode
 $regpath = "HKLM:\SOFTWARE\Policies\Google\Chrome";
 new-item -Path $regpath -Force;
 New-ItemProperty -Path $regpath -Name "IncognitoModeAvailability" -Value "1";
+
+#Disable 'Allow Basic authentication' for WinRM Service
+    $regpath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Service\AllowBasic";
+    new-item -Path $regpath -Force;
+    New-ItemProperty -Path $regpath -Name "AllowBasic" -Value "0";
+
+    #Disable Solicited Remote Assistance
+    $regpath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\fAllowToGetHelp";
+    new-item -Path $regpath -Force;
+    New-ItemProperty -Path $regpath -Name "fAllowToGetHelp" -Value "0";
+
+    #Disable Anonymous enumeration of shares
+     $regpath = "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\RestrictAnonymous";
+    new-item -Path $regpath -Force;
+    New-ItemProperty -Path $regpath -Name "RestrictAnonymous" -Value "1";
+
+    #Disable 'Continue running background apps when Google Chrome is closed'
+    $regpath = "HKLM:\SOFTWARE\Policies\Google\Chrome\BackgroundModeEnabled";
+    new-item -Path $regpath -Force;
+    New-ItemProperty -Path $regpath -Name "BackgroundModeEnabled" -Value "0";
+
+    #Enable 'Apply UAC restrictions to local accounts on network logons'
+    $regpath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LocalAccountTokenFilterPolicy";
+    new-item -Path $regpath -Force;
+    New-ItemProperty -Path $regpath -Name "LocalAccountTokenFilterPolicy" -Value "0";
+
+    #Disable 'Installation and configuration of Network Bridge on your DNS domain network'
+    $regpath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections\NC_AllowNetBridge_NLA";
+    new-item -Path $regpath -Force;
+    New-ItemProperty -Path $regpath -Name "NC_AllowNetBridge_NLA" -Value "0";
+
+    #Prohibit use of Internet Connection Sharing on your DNS domain network
+    $regpath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections\NC_ShowSharedAccessUI";
+    new-item -Path $regpath -Force;
+    New-ItemProperty -Path $regpath -Name "NC_ShowSharedAccessUI" -Value "0";
+
+    #Disable 'Autoplay for non-volume devices'
+    $regpath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer\NoAutoplayfornonVolume";
+    new-item -Path $regpath -Force;
+    New-ItemProperty -Path $regpath -Name "NoAutoplayfornonVolume" -Value "1";
+
+    #Disable running or installing downloaded software with invalid signature
+    $regpath = "HKLM:\SOFTWARE\Policies\Microsoft\Internet Explorer\Download\RunInvalidSignatures";
+    new-item -Path $regpath -Force;
+    New-ItemProperty -Path $regpath -Name "RunInvalidSignatures" -Value "0";
+    
+    #Block outdated ActiveX controls for Internet Explorer
+    $regpath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Ext\VersionCheckEnabled";
+    new-item -Path $regpath -Force;
+    New-ItemProperty -Path $regpath -Name "VersionCheckEnabled" -Value "1";
+
+    #Disable Flash on Adobe Reader DC
+    $regpath = "HKLM\SOFTWARE\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown\bEnableFlash";
+    new-item -Path $regpath -Force;
+    New-ItemProperty -Path $regpath -Name "bEnableFlash" -Value "0";
+
+    #Disable JavaScript on Adobe Reader DC
+    $regpath = "HKLM:\SOFTWARE\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown\bDisableJavaScript";
+    new-item -Path $regpath -Force;
+    New-ItemProperty -Path $regpath -Name "bDisableJavaScript" -Value "1";
+
+    #Enable 'Block third party cookies'
+    $regpath = "HKLM:\SOFTWARE\Policies\Google\Chrome\BlockThirdPartyCookies";
+    new-item -Path $regpath -Force;
+    New-ItemProperty -Path $regpath -Name "BlockThirdPartyCookies" -Value "1";
+
+    #Disable JavaScript on Adobe DC
+    $regpath = "HKLM:\SOFTWARE\Policies\Adobe\Adobe Acrobat\DC\FeatureLockDown\bDisableJavaScript";
+    new-item -Path $regpath -Force;
+    New-ItemProperty -Path $regpath -Name "bDisableJavaScript" -Value "1";
 
 iwr -usebasicparsing -uri https://raw.githubusercontent.com/directorcia/Office365/master/win10-asr-get.ps1 | iex
