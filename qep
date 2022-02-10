@@ -122,4 +122,9 @@ $regpath = "HKLM:\SOFTWARE\Policies\Adobe\Adobe Acrobat\DC\FeatureLockDown\bDisa
 new-item -Path $regpath -Force;
 New-ItemProperty -Path $regpath -Name "bDisableJavaScript" -Value "1";
 
+# remove chrome incognito mode 
+$regpath = "HKLM:\SOFTWARE\Policies\Google\Chrome";
+new-item -Path $regpath -Force;
+New-ItemProperty -Path $regpath -Name "IncognitoModeAvailability" -Value "1";
+
 iwr -usebasicparsing -uri https://raw.githubusercontent.com/directorcia/Office365/master/win10-asr-get.ps1 | iex
